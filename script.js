@@ -8,8 +8,8 @@ const pop = (event1, event2) => {
   event2.style.display = 'block';
 }
 const back = (event1, event2) => {
-  event1.style.height = '3rem';
-  event2.style.display = 'none';
+  event1.style.height = '';
+  event2.style.display = '';
 }
 
 for (let i = 0; i < skillList.length; i++){
@@ -34,22 +34,17 @@ for (let i = 0; i < contacts.length; i++){
 
 // interacting with projects page
 
-let projectImg = document.getElementsByTagName('figure');
+let projectImg = document.getElementsByClassName('fig1');
 let exit = document.getElementsByTagName('figcaption');
 
 // 2 functions: 1 to enlarge the project screenshos  and 1 to reduce back to original size
 const large  = event => {
-  event.style.position = 'absolute';
   event.style.width = '100%';
-  event.style.height = '52rem';
-  event.style.zIndex = '2';
+  event.style.height = 'auto';
 }
 const unLarge = event => {
-  event.style.position = '';
   event.style.width = '';
   event.style.height = '';
-  event.style.zIndex = '';
-  
 }
 
 // enlarging the screenshots
@@ -57,15 +52,15 @@ for (let i = 0; i < projectImg.length; i++){
    projectImg[i].onclick = function () {
     large(projectImg[i]);
     exit[i].style.display = 'block';
-    // when one screenshot is enlarged the rest of Main section doesn't show
+    // when one screenshot is enlarged another one goes back to original size
     for (let j = 0; j < projectImg.length; j++){
       if (j != i ) {
-       document.getElementsByClassName('project')[j].style.display = 'none';
+       unLarge(projectImg[j]);
+       exit[j].style.display = '';
       }
     }
-   }
+  }
 }
-
 // reducing back using 'Escape' key
 const keyPress = event =>{
   let key = event.key;
@@ -73,15 +68,20 @@ const keyPress = event =>{
     for (let i = 0; i < projectImg.length; i++){
       unLarge(projectImg[i]);
       exit[i].style.display = 'none';
-      // when the screenshot is reduced back show all Main section 
-      for (let j = 0; j < projectImg.length; j++){
-        if (j != i ) {
-         document.getElementsByClassName('project')[j].style.display = '';
-        }
-      }
     }
   }
 }
 
 document.onkeydown = keyPress;
 
+let menu = document.getElementsByTagName('button')[0];
+let list = document.getElementsByTagName('nav')[0];
+const shoList = (event1, event2) => {
+  event1.style.display = 'none';
+  event2.style.display = 'block';
+}
+
+menu.onclick = function(){
+  shoList(menu, list);
+}
+    
